@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
+#[Route('/params')]
 class ParamController
 {
-    #[Route('query', name: 'get-query-params', methods: ['GET'])]
+    #[Route('/query', name: 'get-query-params', methods: ['GET'])]
     public function getQueryParams(Request $request): Response
     {
         $name = $request->query->get('name');
@@ -24,7 +25,7 @@ class ParamController
         ]);
     }
 
-    #[Route('attributes/{name}/{email}', name: 'get-from-attributes', methods: ['GET'])]
+    #[Route('/attributes/{name}/{email}', name: 'get-from-attributes', methods: ['GET'])]
     public function getFromAttributes(string $name, string $email): Response
     {
         // Normal approach with Request object
