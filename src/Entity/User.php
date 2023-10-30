@@ -6,19 +6,21 @@ use Symfony\Component\Uid\Uuid;
 
 class User
 {
-    private int $id;
-
+    
+    private string $id;
     private string $name;
     private string $email;
     private \DateTimeInterface $createdOn;
+    private \DateTimeInterface $updatedOn;
 
 
-    public function __construct(string $name, string $email, \DateTimeInterface $createdOn)
+    public function __construct(string $name, string $email)
     {
         $this->id = Uuid::v4()->toRfc4122();
         $this->name = $name;
         $this->email = $email;
         $this->createdOn = new \DateTime();
+        $this->markAsUpdated();
     }
 
     public function getId(): string
@@ -46,5 +48,15 @@ class User
     public function getCreatedOn(): \DateTimeInterface
     {
         return $this->createdOn;
+    }
+
+    public function getUpdatedOn(): \DateTimeInterface
+    {
+        return $this->updatedOn;
+    }
+
+    public function markAsUpdated(): void
+    {
+        $this->updatedOn = new \DateTime();
     }
 }

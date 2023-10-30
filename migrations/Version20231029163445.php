@@ -10,22 +10,22 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231029123534 extends AbstractMigration
+final class Version20231029163445 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Create `user` table';
+        return 'Add user `created_on` column';
     }
 
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE user (id CHAR(36) NOT NULL, name VARCHAR(20) NOT NULL, email VARCHAR(100) NOT NULL, created_on DATETIME NOT NULL, INDEX IDX_name_user (name), UNIQUE INDEX U_email_user (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE user ADD updated_on DATETIME NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE user');
+        $this->addSql('ALTER TABLE user DROP updated_on');
     }
 }
