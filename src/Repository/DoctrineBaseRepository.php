@@ -26,7 +26,8 @@ abstract class DoctrineBaseRepository
     {
         $entityManager = $this->managerRegistry->getManager();
 
-       if($entityManager->isOpen) {
+        /** @var EntityManager $entityManager */
+       if($entityManager->isOpen()) {
             return $entityManager;
        }
 
