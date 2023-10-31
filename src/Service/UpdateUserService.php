@@ -6,22 +6,23 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\DoctrineUserRepository;
+use App\Repository\RedisUserRepository;
 
 class UpdateUserService
 {
-    public function __construct(private DoctrineUserRepository $userRepository)
+    public function __construct(private DoctrineUserRepository $doctrineUserRepository, private RedisUserRepository $redisUserRepository)
     {
-        // ...
     }
 
     public function __invoke(string $id, string $name) : User
     {
-        if(!$user = $this->userRepository->findOneById($id)) {
+        if(!$user = $this->doctrineUserRepository->findOneById($id)) {
             throw new \Exception('User not found');
         }
 
         $user->setName($name);
-        $this->userRepository->save($user);
+        $this->doctrineUserRepository->save($user);
+        $this->redisUserRepository->save($user);
 
         return $user;
     }
