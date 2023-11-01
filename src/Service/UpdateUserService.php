@@ -15,7 +15,7 @@ class UpdateUserService
 
     public function __invoke(string $id, string $name) : User
     {
-        if(!$user = $this->doctrineUserRepository->findOneByIdWithNativeQuery($id)) {
+        if(!$user = $this->doctrineUserRepository->findOneById($id)) {
             throw new \Exception('User not found');
         }
 

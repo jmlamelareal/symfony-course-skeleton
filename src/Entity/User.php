@@ -59,4 +59,15 @@ class User
     {
         $this->updatedOn = new \DateTime();
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'created_on' => $this->createdOn->format(\DateTime::RFC3339),
+            'updated_on' => $this->updatedOn->format(\DateTime::RFC3339),
+        ];
+    }
 }

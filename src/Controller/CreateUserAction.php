@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use App\Http\Response\ApiResponse;
 use App\Service\CreateUserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class CreateUserAction
+class CreateUserAction extends ApiController
 {
     public function __construct(private CreateUserService $createUserService)
     {
@@ -23,16 +25,6 @@ class CreateUserAction
             $data['email']
         );
 
-        return new JsonResponse(
-            [
-                'user' => [
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'created_on' => $user->getCreatedOn()->format(\DateTime::RFC3339),
-                ],
-            ],
-            JsonResponse::HTTP_CREATED
-        );
+        return $this->createResponse(['user' => $user->toArray()], ApiResponse::HTTP_CREATED);
     }
 }

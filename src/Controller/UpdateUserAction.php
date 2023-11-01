@@ -7,7 +7,7 @@ use App\Service\UpdateUserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-class UpdateUserAction
+class UpdateUserAction extends ApiController
 {
     public function __construct(private UpdateUserService $updateUserService)
     {
@@ -23,17 +23,6 @@ class UpdateUserAction
             $data['name']
         );
 
-        return new JsonResponse(
-            [
-                'user' => [
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'created_on' => $user->getCreatedOn()->format(\DateTime::RFC3339),
-                ],
-            ],
-            JsonResponse::HTTP_OK
-        );
-        
+        return $this->createResponse(['user' => $user->toArray()]);        
     }
 }
