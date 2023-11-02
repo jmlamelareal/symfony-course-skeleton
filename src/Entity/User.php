@@ -12,7 +12,7 @@ class User
     private string $email;
     private \DateTimeInterface $createdOn;
     private \DateTimeInterface $updatedOn;
-
+    private Profile $profile;
 
     public function __construct(string $name, string $email)
     {
@@ -21,6 +21,7 @@ class User
         $this->email = $email;
         $this->createdOn = new \DateTime();
         $this->markAsUpdated();
+        $this->profile = new Profile($this);
     }
 
     public function getId(): string
@@ -60,6 +61,16 @@ class User
         $this->updatedOn = new \DateTime();
     }
 
+    public function getProfile(): Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile): void
+    {
+        $this->profile = $profile;
+    }
+
     public function toArray(): array
     {
         return [
@@ -68,6 +79,10 @@ class User
             'email' => $this->email,
             'created_on' => $this->createdOn->format(\DateTime::RFC3339),
             'updated_on' => $this->updatedOn->format(\DateTime::RFC3339),
+            'profile' => [
+                'id' => $this->profile->getId(),
+                'picture_url' => $this->profile->getPictureUrl(),
+            ],
         ];
     }
 }

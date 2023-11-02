@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
-use App\Service\UpdateUserService;
+namespace App\Controller\User;
+
+use App\Controller\ApiController;
+use App\Service\User\UpdateUserService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
